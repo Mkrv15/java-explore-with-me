@@ -3,7 +3,6 @@ package ru.practicum.ewm.stats.client;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import org.aspectj.lang.annotation.After;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
