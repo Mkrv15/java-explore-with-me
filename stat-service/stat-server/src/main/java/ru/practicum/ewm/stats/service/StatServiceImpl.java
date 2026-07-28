@@ -14,12 +14,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class StatServiceImpl implements StatService {
     private final StatsRepository statsRepository;
     private final EndpointHitMapper mapper;
 
     @Override
+    @Transactional
     public EndpointHitDto saveEndpointHit(EndpointHitDto endpointHitDto) {
         EndpointHit saved = statsRepository.save(mapper.toEndpointHit(endpointHitDto));
         return mapper.toEndpointHitDto(saved);
