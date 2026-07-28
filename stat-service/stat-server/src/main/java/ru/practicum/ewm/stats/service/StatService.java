@@ -1,6 +1,5 @@
 package ru.practicum.ewm.stats.service;
 
-import jakarta.persistence.criteria.Predicate;
 import ru.practicum.ewm.stats.dto.EndpointHitDto;
 import ru.practicum.ewm.stats.dto.ViewStatsDto;
 
