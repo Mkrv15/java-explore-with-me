@@ -52,7 +52,7 @@ public class EventServiceImpl implements EventService {
     private final EventMapper mapper;
     private final StatsClient statsClient;
 
-    private final static String APP_NAME = "ewm-main-service";
+    private static final String APP_NAME = "ewm-main-service";
 
     @Override
     public List<EventFullDto> getEventsAdmin(AdminEventFilter filter) {
