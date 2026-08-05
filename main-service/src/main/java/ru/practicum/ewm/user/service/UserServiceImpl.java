@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         if (ids != null || !ids.isEmpty()) {
             users = userRepository.findAllById(ids);
 
-        }else {
+        } else {
             users = userRepository.findAll(pageRequest).getContent();
         }
         return users.stream()
