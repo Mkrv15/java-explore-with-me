@@ -8,9 +8,11 @@ import ru.practicum.ewm.error.model.NotFoundException;
 import ru.practicum.ewm.user.dto.NewUserRequest;
 import ru.practicum.ewm.user.dto.UserDto;
 import ru.practicum.ewm.user.mapper.UserMapper;
+import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,16 +23,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getUsers(List<Long> ids, int from, int size) {
         PageRequest pageRequest = PageRequest.of(from / size, size);
-        if (ids == null || ids.isEmpty()) {
-            return userRepository.findAll(pageRequest)
-                    .stream()
-                    .map(mapper::userToUserDto)
-                    .toList();
+
+        List<User> users;
+        if (ids != null || !ids.isEmpty()) {
+            users = userRepository.findAllById(ids);
+
+        }else {
+            users = userRepository.findAll(pageRequest).getContent();
         }
-        return userRepository.findAllByIdIn(ids, pageRequest)
-                .stream()
+        return users.stream()
                 .map(mapper::userToUserDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -85,7 +85,7 @@ public class EventServiceImpl implements EventService {
 
         if (request.getEventDate() != null) {
             if (request.getEventDate().isBefore(LocalDateTime.now().plusHours(1))) {
-                throw new ValidationException("Дата начала события должна быть не ранее чем за час от даты публикации.");
+                throw new ConflictException("Дата начала события должна быть не ранее чем за час от даты публикации.");
             }
         }
 
@@ -97,7 +97,7 @@ public class EventServiceImpl implements EventService {
                 event.setState(EventState.PUBLISHED);
                 event.setPublishedOn(LocalDateTime.now());
             } else if (request.getStateAction() == StateAction.REJECT_EVENT) {
-                if (event.getState() == EventState.PENDING) {
+                if (event.getState() == EventState.PUBLISHED) {
                     throw new ConflictException("Событие нельзя отклонить, так как оно уже опубликовано.");
                 }
                 event.setState(EventState.CANCELED);
@@ -149,13 +149,31 @@ public class EventServiceImpl implements EventService {
             }
         }
 
+        if (event.getState() == EventState.PUBLISHED) {
+            throw new ConflictException("Нельзя изменять опубликованное событие");
+        }
+
         if (request.getStateAction() != null) {
-            if (request.getStateAction() == StateAction.SEND_TO_REVIEW) {
-                event.setState(EventState.PENDING);
-            } else if (request.getStateAction() == StateAction.CANCEL_REVIEW) {
-                event.setState(EventState.CANCELED);
+            switch (request.getStateAction()) {
+                case SEND_TO_REVIEW:
+                    if (event.getState() == EventState.PUBLISHED) {
+                        throw new ConflictException("Нельзя отправить на модерацию опубликованное событие");
+                    }
+                    event.setState(EventState.PENDING);
+                    break;
+
+                case CANCEL_REVIEW:
+                    if (event.getState() != EventState.PENDING) {
+                        throw new ConflictException("Отменить можно только событие в состоянии ожидания модерации (PENDING)");
+                    }
+                    event.setState(EventState.CANCELED);
+                    break;
+
+                default:
+                    break;
             }
         }
+
 
         updateEventFields(event, request);
         Event saved = eventRepository.save(event);
@@ -417,8 +435,8 @@ public class EventServiceImpl implements EventService {
     private ParticipationRequestDto convertToRequestDto(ParticipationRequest request) {
         ParticipationRequestDto dto = new ParticipationRequestDto();
         dto.setId(request.getId());
-        dto.setEventId(request.getEvent().getId());
-        dto.setRequesterId(request.getRequester().getId());
+        dto.setEvent(request.getEvent().getId());
+        dto.setRequester(request.getRequester().getId());
         dto.setStatus(request.getRequestStatus().toString());
         dto.setCreated(request.getCreated().toString());
         return dto;
