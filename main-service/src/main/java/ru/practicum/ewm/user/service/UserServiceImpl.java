@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
         PageRequest pageRequest = PageRequest.of(from / size, size);
 
         List<User> users;
-        if (ids != null || !ids.isEmpty()) {
+        if (ids != null && !ids.isEmpty()) {
             users = userRepository.findAllById(ids);
 
         } else {
