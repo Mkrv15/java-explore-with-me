@@ -10,8 +10,8 @@ import ru.practicum.ewm.user.mapper.UserMapper;
 @Mapper(componentModel = "spring", uses = {EventMapper.class, UserMapper.class})
 public interface RequestMapper {
 
-    @Mapping(source = "event.id", target = "eventId")
-    @Mapping(source = "requester.id", target = "requesterId")
+    @Mapping(source = "event.id", target = "event")
+    @Mapping(source = "requester.id", target = "requester")
     @Mapping(source = "requestStatus", target = "status")
     ParticipationRequestDto mapToRequestDto(ParticipationRequest participationRequest);
 }
