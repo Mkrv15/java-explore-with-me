@@ -1,6 +1,5 @@
 package ru.practicum.ewm.stats.client;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -31,7 +30,7 @@ public class StatsClient {
 
     public List<ViewStatsDto> getStats(@NotNull LocalDateTime start,
                                        @NotNull LocalDateTime end,
-                                       @NotNull @NotBlank List<String> uris,
+                                       List<String> uris,
                                        @NotNull Boolean unique) {
         if (end.isBefore(start)) {
             throw new IllegalArgumentException("Дата старта должна быть раньше даты окончания");
