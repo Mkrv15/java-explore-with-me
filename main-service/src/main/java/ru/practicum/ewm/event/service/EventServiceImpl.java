@@ -438,7 +438,7 @@ public class EventServiceImpl implements EventService {
         dto.setEvent(request.getEvent().getId());
         dto.setRequester(request.getRequester().getId());
         dto.setStatus(request.getRequestStatus().toString());
-        dto.setCreated(request.getCreated().toString());
+        dto.setCreated(request.getCreated());
         return dto;
     }
 
