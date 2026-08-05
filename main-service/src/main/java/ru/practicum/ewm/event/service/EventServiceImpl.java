@@ -85,7 +85,7 @@ public class EventServiceImpl implements EventService {
 
         if (request.getEventDate() != null) {
             if (request.getEventDate().isBefore(LocalDateTime.now().plusHours(1))) {
-                throw new ConflictException("Дата начала события должна быть не ранее чем за час от даты публикации.");
+                throw new ValidationException("Дата начала события должна быть не ранее чем за час от даты публикации.");
             }
         }
 

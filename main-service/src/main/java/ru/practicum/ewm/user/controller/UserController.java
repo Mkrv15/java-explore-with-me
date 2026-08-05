@@ -1,6 +1,7 @@
 package ru.practicum.ewm.user.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class UserController {
     @GetMapping
     public List<UserDto> getUsers(@RequestParam(required = false) List<Long> userIds,
                                   @RequestParam(defaultValue = "0") @PositiveOrZero int from,
-                                  @RequestParam(defaultValue = "10") @PositiveOrZero int size) {
+                                  @RequestParam(defaultValue = "10") @Positive int size) {
         log.info("Admin: Getting Users ids={}, from={},size={}", userIds, from, size);
         return userService.getUsers(userIds, from, size);
     }
