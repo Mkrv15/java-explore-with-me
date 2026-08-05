@@ -33,7 +33,7 @@ public class RequestServiceImpl implements RequestService {
     public List<ParticipationRequestDto> getUserRequests(Long userId) {
         List<ParticipationRequest> requests = requestRepository.findAllByRequesterId(userId);
         if (!requests.isEmpty()) {
-            requests.stream().map(mapper::mapToRequestDto).toList();
+            return requests.stream().map(mapper::mapToRequestDto).toList();
         }
         return List.of();
     }

@@ -11,7 +11,7 @@ import ru.practicum.ewm.user.model.User;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "request")
+@Table(name = "requests")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +22,7 @@ public class ParticipationRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "created", nullable = false)
     private LocalDateTime created;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,6 +34,6 @@ public class ParticipationRequest {
     private User requester;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "state", nullable = false)
+    @Column(name = "status", nullable = false)
     private RequestStatus requestStatus;
 }
