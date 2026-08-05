@@ -1,6 +1,5 @@
 package ru.practicum.ewm.compilation.dto;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class UpdateCompilationRequest {
 
-    @NotNull
     @Size(min = 1, max = 50)
     private String title;
 
