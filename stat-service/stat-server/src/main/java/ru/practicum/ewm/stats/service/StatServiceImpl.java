@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.stats.dto.EndpointHitDto;
 import ru.practicum.ewm.stats.dto.ViewStatsDto;
+import ru.practicum.ewm.stats.error.ValidationException;
 import ru.practicum.ewm.stats.mapper.EndpointHitMapper;
 import ru.practicum.ewm.stats.model.EndpointHit;
 import ru.practicum.ewm.stats.repository.StatsRepository;
@@ -27,6 +28,21 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+
+        if (start == null) {
+            throw new ValidationException("Start date cannot be null");
+        }
+        if (end == null) {
+            throw new ValidationException("End date cannot be null");
+        }
+
+        if (end.isBefore(start)) {
+            throw new ValidationException("Дата старта должна быть раньше даты окончания");
+        }
+        if (end.equals(start)) {
+            throw new ValidationException("Дата старта должна быть раньше даты окончания");
+        }
+
         return unique ? statsRepository.findUniqueStats(start, end, uris)
                 : statsRepository.findStats(start, end, uris);
     }

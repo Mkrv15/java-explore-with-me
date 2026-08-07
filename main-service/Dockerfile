@@ -1,12 +1,4 @@
 FROM amazoncorretto:21.0.6
-
 WORKDIR /app
-
-VOLUME /tmp
-
-EXPOSE 8080
-
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-
-ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"]
+COPY target/main-service-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
