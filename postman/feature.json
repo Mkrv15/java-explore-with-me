@@ -1,11 +1,11 @@
 {
   "info": {
-    "_postman_id": "2e4e3afa-e157-4ee3-a51d-54736fc2bc15",
+    "_postman_id": "f8ae01f9-75b5-4f27-ad48-e3ae26d2f7f3",
     "name": "Ratings API Tests",
     "description": "Тестирование функциональности лайков/дизлайков (рейтинг)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52398158",
-    "_collection_link": "https://go.postman.co/collection/52398158-2e4e3afa-e157-4ee3-a51d-54736fc2bc15?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/52398158-f8ae01f9-75b5-4f27-ad48-e3ae26d2f7f3?source=collection_link"
   },
   "item": [
     {
@@ -599,17 +599,21 @@
               "listen": "prerequest",
               "script": {
                 "exec": [
-                  "const api = new API(pm);",
-                  "const rnd = new RandomUtils();",
-                  "const user = await api.addUser(rnd.getUser());",
-                  "const category = await api.addCategory(rnd.getCategory());",
-                  "const event = await api.addEvent(user.id, rnd.getEvent(category.id));",
-                  "pm.collectionVariables.set('unpublishedEventId', event.id);",
-                  "pm.collectionVariables.set('tempUserId', user.id);",
-                  "",
-                  "console.log('Создано неопубликованное событие с ID:', event.id);"
+                  "(async function() {",
+                  "    const api = new API(pm);",
+                  "    const rnd = new RandomUtils();",
+                  "    const user = await api.addUser(rnd.getUser());",
+                  "    const category = await api.addCategory(rnd.getCategory());",
+                  "    const event = await api.addEvent(user.id, rnd.getEvent(category.id));",
+                  "    pm.collectionVariables.set('unpublishedEventId', event.id);",
+                  "    pm.collectionVariables.set('tempUserId', user.id);",
+                  "    console.log('Создано неопубликованное событие с ID:', event.id);",
+                  "})();",
+                  ""
                 ],
-                "type": "text/javascript"
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
               }
             },
             {
@@ -626,7 +630,9 @@
                   "    pm.expect(jsonData.message).to.include('unpublished');",
                   "});"
                 ],
-                "type": "text/javascript"
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
               }
             }
           ],
