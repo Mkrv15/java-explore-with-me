@@ -2,6 +2,7 @@ package ru.practicum.ewm.rating.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.error.model.ConflictException;
 import ru.practicum.ewm.error.model.NotFoundException;
 import ru.practicum.ewm.event.model.Event;
@@ -30,6 +31,7 @@ public class RatingServiceImpl implements RatingService {
     private final RatingMapper mapper;
 
     @Override
+    @Transactional
     public RatingDto addRating(Long userId, CreateReactionRequest request) {
         User user = getUserOrElseThrow(userId);
 
@@ -62,6 +64,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @Transactional
     public RatingDto updateRating(Long userId, Long reactionId, Boolean isLike) {
         User user = getUserOrElseThrow(userId);
 
@@ -85,6 +88,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @Transactional
     public void deleteRating(Long userId, Long reactionId) {
         Rating rating = getRatingOrElseThrow(reactionId);
         User user = getUserOrElseThrow(userId);
