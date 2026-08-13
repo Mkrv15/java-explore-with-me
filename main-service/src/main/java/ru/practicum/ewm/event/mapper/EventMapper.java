@@ -25,9 +25,9 @@ public interface EventMapper {
     @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "publishedOn", ignore = true)
     @Mapping(target = "confirmedRequests", ignore = true)
-    @Mapping(target = "likesCount",  ignore = true)
-    @Mapping(target = "dislikesCount",  ignore = true)
-    @Mapping(target = "rating",  ignore = true)
+    @Mapping(target = "likesCount", ignore = true)
+    @Mapping(target = "dislikesCount", ignore = true)
+    @Mapping(target = "rating", ignore = true)
     Event mapToEvent(NewEventDto newEventDto);
 
     @Mapping(target = "views", ignore = true)

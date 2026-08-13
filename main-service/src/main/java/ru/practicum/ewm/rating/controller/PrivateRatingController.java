@@ -29,26 +29,26 @@ public class PrivateRatingController {
     @PatchMapping("/{ratingId}")
     public RatingDto updateRating(@PathVariable Long userId,
                                   @PathVariable Long ratingId,
-                                  @RequestParam Boolean isLike){
+                                  @RequestParam Boolean isLike) {
         log.info("User {} updating reaction {} to isLike={}", userId, ratingId, isLike);
         return ratingService.updateRating(userId, ratingId, isLike);
     }
 
     @DeleteMapping("/{ratingId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRating(@PathVariable Long userId, @PathVariable Long ratingId){
+    public void deleteRating(@PathVariable Long userId, @PathVariable Long ratingId) {
         log.info("User {} removing reaction {}", userId, ratingId);
-        ratingService.deleteRating(userId,ratingId);
+        ratingService.deleteRating(userId, ratingId);
     }
 
     @GetMapping
-    public List<RatingDto> getUserRatings(@PathVariable Long userId){
+    public List<RatingDto> getUserRatings(@PathVariable Long userId) {
         log.debug("Getting rating for user {} ", userId);
         return ratingService.getUserRatings(userId);
     }
 
     @GetMapping("/event/{eventId}")
-    public RatingDto getEventRating(@PathVariable Long userId, @PathVariable Long eventId){
+    public RatingDto getEventRating(@PathVariable Long userId, @PathVariable Long eventId) {
         log.info("Getting reaction for user {} and event {}", userId, eventId);
         return ratingService.getRatingByEventAndUser(eventId, userId);
     }

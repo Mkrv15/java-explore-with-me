@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class RatingServiceImpl implements RatingService{
+public class RatingServiceImpl implements RatingService {
     private final RatingRepository ratingRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
@@ -89,7 +89,7 @@ public class RatingServiceImpl implements RatingService{
         Rating rating = getRatingOrElseThrow(reactionId);
         User user = getUserOrElseThrow(userId);
 
-        if(rating.getEvent().getState() != EventState.PUBLISHED) {
+        if (rating.getEvent().getState() != EventState.PUBLISHED) {
             throw new ConflictException("Cannot react to unpublished event");
         }
         if (!rating.getUser().equals(user)) {
@@ -103,7 +103,7 @@ public class RatingServiceImpl implements RatingService{
 
     @Override
     public RatingDto getRatingByEventAndUser(Long eventId, Long userId) {
-        Rating rating = ratingRepository.findByUserIdAndEventId(userId,eventId).orElseThrow(
+        Rating rating = ratingRepository.findByUserIdAndEventId(userId, eventId).orElseThrow(
                 () -> new NotFoundException("Reaction not found for event=" + eventId + " and user=" + userId));
         return mapper.toDto(rating);
     }
@@ -170,7 +170,7 @@ public class RatingServiceImpl implements RatingService{
 
         event.setLikesCount(likesCount);
         event.setDislikesCount(dislikesCount);
-        event.setRating(likesCount-dislikesCount);
+        event.setRating(likesCount - dislikesCount);
 
         eventRepository.save(event);
     }

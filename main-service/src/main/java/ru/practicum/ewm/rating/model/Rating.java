@@ -11,7 +11,7 @@ import ru.practicum.ewm.user.model.User;
 import java.time.LocalDateTime;
 
 @Entity
-@Table( name = "ratings")
+@Table(name = "ratings")
 @Getter
 @Setter
 @AllArgsConstructor

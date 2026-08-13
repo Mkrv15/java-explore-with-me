@@ -23,5 +23,5 @@ public interface RatingService {
 
     EventRatingDto getEventRating(Long eventId);
 
-    UserRatingDto  getUserRating(Long userId);
+    UserRatingDto getUserRating(Long userId);
 }
