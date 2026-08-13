@@ -66,4 +66,16 @@ public class Event {
 
     @Column(name = "confirmed_requests")
     private Integer confirmedRequests;
+
+    @Column(name = "likes_count")
+    private Integer likesCount = 0;
+
+    @Column(name = "dislikes_count")
+    private Integer dislikesCount = 0;
+
+    @Column(name = "rating")
+    private Integer rating = 0;
+
+    @Transient
+    private Double ratingPercent;
 }

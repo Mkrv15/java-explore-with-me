@@ -23,4 +23,13 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(name = "total_likes")
+    private Integer totalLikes = 0;
+
+    @Column(name = "total_dislikes")
+    private Integer totalDislikes = 0;
+
+    @Column(name = "author_rating")
+    private Integer authorRating = 0;
 }
