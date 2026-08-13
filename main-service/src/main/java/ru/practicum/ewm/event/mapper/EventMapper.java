@@ -12,6 +12,10 @@ import ru.practicum.ewm.user.mapper.UserMapper;
 @Mapper(componentModel = "spring", uses =  {CategoryMapper.class, UserMapper.class})
 public interface EventMapper {
 
+    @Mapping(target = "views", ignore = true)
+    @Mapping(target = "likesCount", source = "likesCount")
+    @Mapping(target = "dislikesCount", source = "dislikesCount")
+    @Mapping(target = "rating", source = "rating")
     EventFullDto toEventFullDto(Event event);
 
     @Mapping(target = "id", ignore = true)
@@ -21,7 +25,14 @@ public interface EventMapper {
     @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "publishedOn", ignore = true)
     @Mapping(target = "confirmedRequests", ignore = true)
+    @Mapping(target = "likesCount", ignore = true)
+    @Mapping(target = "dislikesCount", ignore = true)
+    @Mapping(target = "rating", ignore = true)
     Event mapToEvent(NewEventDto newEventDto);
 
+    @Mapping(target = "views", ignore = true)
+    @Mapping(target = "likesCount", source = "likesCount")
+    @Mapping(target = "dislikesCount", source = "dislikesCount")
+    @Mapping(target = "rating", source = "rating")
     EventShortDto toEventShortDto(Event event);
 }

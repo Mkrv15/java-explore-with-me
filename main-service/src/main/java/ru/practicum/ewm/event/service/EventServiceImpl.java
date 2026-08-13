@@ -20,10 +20,7 @@ import ru.practicum.ewm.event.dto.UpdateEventRequest;
 import ru.practicum.ewm.event.dto.filter.AdminEventFilter;
 import ru.practicum.ewm.event.dto.filter.PublicEventFilter;
 import ru.practicum.ewm.event.mapper.EventMapper;
-import ru.practicum.ewm.event.model.Event;
-import ru.practicum.ewm.event.model.EventState;
-import ru.practicum.ewm.event.model.Location;
-import ru.practicum.ewm.event.model.StateAction;
+import ru.practicum.ewm.event.model.*;
 import ru.practicum.ewm.event.repository.EventRepository;
 import ru.practicum.ewm.request.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.request.dto.EventRequestStatusUpdateResult;
@@ -156,9 +153,6 @@ public class EventServiceImpl implements EventService {
         if (request.getStateAction() != null) {
             switch (request.getStateAction()) {
                 case SEND_TO_REVIEW:
-                    if (event.getState() == EventState.PUBLISHED) {
-                        throw new ConflictException("Нельзя отправить на модерацию опубликованное событие");
-                    }
                     event.setState(EventState.PENDING);
                     break;
 
@@ -263,6 +257,13 @@ public class EventServiceImpl implements EventService {
                 dtos.sort(Comparator.comparing(EventShortDto::getEventDate));
             } else if (filter.getSort().equalsIgnoreCase("VIEWS")) {
                 dtos.sort(Comparator.comparing(EventShortDto::getViews,
+                        Comparator.nullsLast(Comparator.reverseOrder())));
+            } else if (filter.getSort().equalsIgnoreCase("RATING_EVENT")) {
+                dtos.sort(Comparator.comparing(EventShortDto::getRating,
+                        Comparator.nullsLast(Comparator.reverseOrder())));
+            } else if (filter.getSort().equalsIgnoreCase("RATING_AUTHOR")) {
+                dtos.sort(Comparator.comparing(
+                        eventShortDto -> eventShortDto.getInitiator().getAuthorRating(),
                         Comparator.nullsLast(Comparator.reverseOrder())));
             }
         }

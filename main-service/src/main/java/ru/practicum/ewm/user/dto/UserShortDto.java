@@ -15,4 +15,9 @@ public class UserShortDto {
 
     private String name;
 
+    private Integer totalLikes;
+
+    private Integer totalDislikes;
+
+    private Integer authorRating;
 }
